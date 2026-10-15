@@ -132,6 +132,9 @@ class MahasiswaController extends Controller
 
     public function import(Request $request, ExcelService $excel)
     {
+        @ini_set('memory_limit', '512M');
+        @set_time_limit(300);
+
         $request->validate(['file' => 'required|file|mimes:xlsx,xls,csv|max:5120']);
 
         try {
@@ -141,38 +144,66 @@ class MahasiswaController extends Controller
         }
 
         $baru = $update = $lewati = 0;
-        DB::transaction(function () use ($rows, &$baru, &$update, &$lewati) {
+        $kelasCache = [];
+
+        // Kumpulkan semua NIM untuk pre-fetch user agar tidak query SELECT 1-per-1
+        $nims = [];
+        foreach ($rows as $r) {
+            $nim = trim((string) ($r['nim'] ?? ''));
+            if ($nim !== '') {
+                $nims[] = $nim;
+            }
+        }
+        $existingUsers = User::whereIn('username', $nims)->get()->keyBy('username');
+
+        DB::transaction(function () use ($rows, $existingUsers, &$kelasCache, &$baru, &$update, &$lewati) {
             foreach ($rows as $r) {
-                $nim = trim($r['nim'] ?? '');
-                if ($nim === '' || trim($r['nama'] ?? '') === '' || trim($r['kelas'] ?? '') === '') {
+                $nim = trim((string) ($r['nim'] ?? ''));
+                $nama = trim((string) ($r['nama'] ?? ''));
+                $kelasNama = trim((string) ($r['kelas'] ?? ''));
+
+                if ($nim === '' || $nama === '' || $kelasNama === '') {
                     $lewati++;
                     continue;
                 }
-                $kelas = Kelas::findOrCreateByName($r['kelas']);
+
+                $kelasKey = strtoupper($kelasNama);
+                if (! isset($kelasCache[$kelasKey])) {
+                    $kelasCache[$kelasKey] = Kelas::findOrCreateByName($kelasNama);
+                }
+                $kelas = $kelasCache[$kelasKey];
+
                 if (! $kelas) {
                     $lewati++;
                     continue;
                 }
-                $user = User::where('username', $nim)->first();
+
+                $user = $existingUsers->get($nim);
                 if ($user && $user->isAdmin()) {
                     $lewati++;
                     continue;
                 }
+
+                // Gunakan bcrypt cost 4 untuk bulk import instan; otomatis dire-hash ke cost 12 saat mahasiswa login
+                $rawPassword = ($r['password'] ?? '') !== '' ? (string) $r['password'] : $nim;
+                $hashedPassword = password_hash($rawPassword, PASSWORD_BCRYPT, ['cost' => 4]);
+
                 if ($user) {
-                    $user->fill(['name' => $r['nama'], 'kelas_id' => $kelas->id]);
+                    $user->fill(['name' => $nama, 'kelas_id' => $kelas->id]);
                     if (! empty($r['password'])) {
-                        $user->password = $r['password'];
+                        $user->password = $hashedPassword;
                     }
                     $user->save();
                     $update++;
                 } else {
-                    User::create([
+                    $newUser = User::create([
                         'username' => $nim,
-                        'name' => $r['nama'],
-                        'password' => ($r['password'] ?? '') !== '' ? $r['password'] : $nim,
+                        'name' => $nama,
+                        'password' => $hashedPassword,
                         'role' => 'mahasiswa',
                         'kelas_id' => $kelas->id,
                     ]);
+                    $existingUsers->put($nim, $newUser);
                     $baru++;
                 }
             }

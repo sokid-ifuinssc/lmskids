@@ -169,6 +169,9 @@ class SoalController extends Controller
 
     public function import(Request $request, ExcelService $excel)
     {
+        @ini_set('memory_limit', '512M');
+        @set_time_limit(300);
+
         $request->validate([
             'mata_kuliah_id' => 'required|exists:mata_kuliah,id',
             'tipe' => 'required|in:pg,essay',
