@@ -13,7 +13,7 @@ class SoalController extends Controller
 {
     public function index(Request $request)
     {
-        $mkList = MataKuliah::orderBy('nama')->get();
+        $mkList = MataKuliah::withCount('soal')->orderBy('nama')->get();
 
         $soal = Soal::with('mataKuliah')->withCount('ujian')
             ->when($request->mk, fn ($q, $v) => $q->where('mata_kuliah_id', $v))

@@ -117,19 +117,30 @@ class UjianController extends Controller
 
     public function soal(Request $request, Ujian $ujian)
     {
-        $ujian->load(['mataKuliah', 'kelas', 'soal']);
+        $ujian->load(['mataKuliah', 'kelas', 'soal.mataKuliah']);
         $terpasang = $ujian->soal->pluck('id');
 
-        $bank = Soal::where('mata_kuliah_id', $ujian->mata_kuliah_id)
+        // Daftar semua mata kuliah beserta jumlah soal di bank untuk pengelompokan/filter
+        $mkList = MataKuliah::withCount('soal')->orderBy('nama')->get();
+
+        // Default filter: mata kuliah ujian ini, agar soal dari MK lain tersembunyi secara default.
+        // User juga bisa mengganti pilihan jika ingin mengambil dari bank soal MK lain (misal: Cyberculture).
+        $selectedMk = $request->get('mk', (string) $ujian->mata_kuliah_id);
+
+        $bankQuery = Soal::with('mataKuliah')
             ->whereNotIn('id', $terpasang)
+            ->when($selectedMk !== 'all', fn ($q) => $q->where('mata_kuliah_id', $selectedMk))
             ->when($request->tipe, fn ($q, $v) => $q->where('tipe', $v))
-            ->when($request->q, fn ($q, $v) => $q->where('pertanyaan', 'like', "%$v%"))
-            ->latest()->get();
+            ->when($request->q, fn ($q, $v) => $q->where('pertanyaan', 'like', "%$v%"));
 
-        $sisaPg = Soal::where('mata_kuliah_id', $ujian->mata_kuliah_id)->where('tipe', 'pg')->whereNotIn('id', $terpasang)->count();
-        $sisaEssay = Soal::where('mata_kuliah_id', $ujian->mata_kuliah_id)->where('tipe', 'essay')->whereNotIn('id', $terpasang)->count();
+        $bank = $bankQuery->latest()->get();
 
-        return view('admin.ujian.soal', compact('ujian', 'bank', 'sisaPg', 'sisaEssay'));
+        // Hitung sisa soal untuk modal generate acak (sesuai MK yang dipilih)
+        $targetMkId = ($selectedMk !== 'all') ? $selectedMk : $ujian->mata_kuliah_id;
+        $sisaPg = Soal::where('mata_kuliah_id', $targetMkId)->where('tipe', 'pg')->whereNotIn('id', $terpasang)->count();
+        $sisaEssay = Soal::where('mata_kuliah_id', $targetMkId)->where('tipe', 'essay')->whereNotIn('id', $terpasang)->count();
+
+        return view('admin.ujian.soal', compact('ujian', 'bank', 'mkList', 'selectedMk', 'sisaPg', 'sisaEssay'));
     }
 
     private function attach(Ujian $ujian, array $ids): int
@@ -148,27 +159,28 @@ class UjianController extends Controller
 
     public function attachSoal(Request $request, Ujian $ujian)
     {
-        $ids = Soal::where('mata_kuliah_id', $ujian->mata_kuliah_id)
-            ->whereIn('id', (array) $request->input('ids', []))->pluck('id')->all();
+        $ids = Soal::whereIn('id', (array) $request->input('ids', []))->pluck('id')->all();
         $n = $this->attach($ujian, $ids);
 
-        return back()->with('success', "$n soal ditambahkan ke ujian.");
+        return back()->with('success', "$n soal dari bank soal berhasil dipasang ke ujian.");
     }
 
     public function generateSoal(Request $request, Ujian $ujian)
     {
         $data = $request->validate([
+            'mata_kuliah_id' => 'nullable|exists:mata_kuliah,id',
             'jumlah_pg' => 'nullable|integer|min:0|max:500',
             'jumlah_essay' => 'nullable|integer|min:0|max:100',
         ]);
+        $targetMkId = $data['mata_kuliah_id'] ?? $ujian->mata_kuliah_id;
         $terpasang = $ujian->soal()->pluck('soal.id');
 
-        $pick = function ($tipe, $n) use ($ujian, $terpasang) {
+        $pick = function ($tipe, $n) use ($targetMkId, $terpasang) {
             if ($n <= 0) {
                 return [];
             }
 
-            return Soal::where('mata_kuliah_id', $ujian->mata_kuliah_id)->where('tipe', $tipe)
+            return Soal::where('mata_kuliah_id', $targetMkId)->where('tipe', $tipe)
                 ->whereNotIn('id', $terpasang)->inRandomOrder()->limit($n)->pluck('id')->all();
         };
 

@@ -7,6 +7,27 @@
 @section('page-subtitle', 'Bank Soal Pilihan Ganda & Essay per Mata Kuliah')
 
 @section('content')
+    <!-- Quick Mata Kuliah Filter Chips -->
+    @if($mkList->count() > 0)
+        <div style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.6rem; margin-bottom: 1rem; align-items: center;">
+            <span style="font-size: 0.78rem; font-weight: 700; color: #64748b; white-space: nowrap; text-transform: uppercase;">
+                <i class="ri-folder-shared-line" style="color: #10b981;"></i> Mata Kuliah:
+            </span>
+            <a href="{{ route('admin.soal.index', ['tipe' => request('tipe'), 'q' => request('q')]) }}"
+               class="btn btn-xs {{ !request('mk') ? 'btn-primary' : 'btn-outline' }}"
+               style="border-radius: 20px; padding: 0.3rem 0.85rem; font-size: 0.78rem; white-space: nowrap;">
+                Semua MK ({{ $mkList->sum('soal_count') }})
+            </a>
+            @foreach($mkList as $mk)
+                <a href="{{ route('admin.soal.index', ['mk' => $mk->id, 'tipe' => request('tipe'), 'q' => request('q')]) }}"
+                   class="btn btn-xs {{ request('mk') == $mk->id ? 'btn-primary' : 'btn-outline' }}"
+                   style="border-radius: 20px; padding: 0.3rem 0.85rem; font-size: 0.78rem; white-space: nowrap;">
+                    {{ $mk->nama }} ({{ $mk->soal_count }})
+                </a>
+            @endforeach
+        </div>
+    @endif
+
     <!-- Action Bar & Filters -->
     <div class="card card-accent" style="margin-bottom: 1.5rem;">
         <div class="card-body" style="padding: 1.25rem;">

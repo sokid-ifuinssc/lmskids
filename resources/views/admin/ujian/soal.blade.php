@@ -116,38 +116,103 @@
 
         <!-- Right Column: Pilih dari Bank Soal -->
         <div class="card card-accent-blue">
-            <div class="card-header">
-                <h2>
-                    <i class="ri-archive-line" style="color: #2563eb;"></i>
-                    <span>Pilih dari Bank Soal ({{ $bank->count() }} Tersedia)</span>
-                </h2>
+            <div class="card-header" style="flex-wrap: wrap; gap: 0.5rem; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2 style="font-size: 1.05rem; margin: 0; color: #1e293b; display: flex; align-items: center; gap: 0.35rem;">
+                        <i class="ri-archive-line" style="color: #2563eb;"></i>
+                        <span>Pilih dari Bank Soal ({{ $bank->count() }} Tersedia)</span>
+                    </h2>
+                    @php
+                        $activeMkObj = $mkList->firstWhere('id', $selectedMk);
+                    @endphp
+                    <div class="text-xs text-muted" style="margin-top: 3px;">
+                        @if($selectedMk === 'all')
+                            Menampilkan soal dari: <strong>Semua Mata Kuliah</strong>
+                        @else
+                            Menampilkan soal khusus MK: <strong style="color: #2563eb;">{{ $activeMkObj->nama ?? $ujian->mataKuliah->nama }}</strong>
+                        @endif
+                    </div>
+                </div>
+
+                @if($bank->count() > 0)
+                    <button type="button" class="btn btn-outline btn-sm" id="btnToggleSelectAllBank" onclick="toggleSelectAllBank()" style="font-size: 0.78rem; padding: 0.25rem 0.6rem;">
+                        <i class="ri-checkbox-multiple-line"></i> <span id="labelToggleSelectAll">Centang Semua</span>
+                    </button>
+                @endif
             </div>
+
             <div class="card-body" style="padding: 1rem;">
-                <form action="{{ route('admin.ujian.soal', $ujian) }}" method="GET" style="margin-bottom: 1rem;">
+                <!-- Filter Pengelompokan Mata Kuliah & Pencarian -->
+                <form action="{{ route('admin.ujian.soal', $ujian) }}" method="GET" style="margin-bottom: 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.85rem;">
+                    <!-- Dropdown Filter Pengelompokan MK -->
+                    <div class="form-group" style="margin-bottom: 0.6rem;">
+                        <label class="form-label" style="font-size: 0.76rem; font-weight: 700; color: #334155; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between;">
+                            <span><i class="ri-filter-3-line" style="color: #2563eb;"></i> Kelompokkan Bank Soal per Mata Kuliah:</span>
+                            <span class="badge" style="background: #e2e8f0; font-size: 0.68rem; font-weight: 600;">{{ $bank->count() }} siap dipasang</span>
+                        </label>
+                        <select name="mk" class="form-select" style="min-height: 36px; font-size: 0.85rem; font-weight: 600; background-color: #fff; border-color: #cbd5e1;" onchange="this.form.submit()">
+                            <optgroup label="Mata Kuliah Ujian Ini">
+                                @php
+                                    $ujianMk = $mkList->firstWhere('id', $ujian->mata_kuliah_id);
+                                @endphp
+                                <option value="{{ $ujian->mata_kuliah_id }}" {{ (string)$selectedMk === (string)$ujian->mata_kuliah_id ? 'selected' : '' }}>
+                                    ★ {{ $ujian->mataKuliah->nama }} ({{ $ujian->mataKuliah->kode }}) &mdash; {{ $ujianMk?->soal_count ?? 0 }} Soal di Bank
+                                </option>
+                            </optgroup>
+
+                            @if($mkList->where('id', '!=', $ujian->mata_kuliah_id)->count() > 0)
+                                <optgroup label="Mata Kuliah Lainnya (Pilih jika ingin mengambil dari MK lain)">
+                                    @foreach($mkList->where('id', '!=', $ujian->mata_kuliah_id) as $mk)
+                                        <option value="{{ $mk->id }}" {{ (string)$selectedMk === (string)$mk->id ? 'selected' : '' }}>
+                                            {{ $mk->nama }} ({{ $mk->kode }}) &mdash; {{ $mk->soal_count }} Soal di Bank
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endif
+
+                            <optgroup label="Semua">
+                                <option value="all" {{ $selectedMk === 'all' ? 'selected' : '' }}>
+                                    -- Tampilkan Semua Bank Soal (Semua Mata Kuliah) --
+                                </option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <!-- Filter Pencarian & Tipe -->
                     <div style="display: flex; gap: 0.4rem;">
-                        <input type="text" name="q" class="form-control" placeholder="Cari pertanyaan di bank soal..." value="{{ request('q') }}" style="min-height: 34px; font-size: 0.84rem;">
-                        <select name="tipe" class="form-select" style="min-height: 34px; font-size: 0.84rem; width: 120px;" onchange="this.form.submit()">
-                            <option value="">Semua</option>
+                        <input type="text" name="q" class="form-control" placeholder="Cari pertanyaan di bank soal..." value="{{ request('q') }}" style="min-height: 34px; font-size: 0.82rem; background: #fff;">
+                        <select name="tipe" class="form-select" style="min-height: 34px; font-size: 0.82rem; width: 110px; background: #fff;" onchange="this.form.submit()">
+                            <option value="">Semua Tipe</option>
                             <option value="pg" {{ request('tipe') === 'pg' ? 'selected' : '' }}>PG</option>
                             <option value="essay" {{ request('tipe') === 'essay' ? 'selected' : '' }}>Essay</option>
                         </select>
-                        <button type="submit" class="btn btn-sm btn-outline">Cari</button>
+                        <button type="submit" class="btn btn-sm btn-outline" style="padding: 0 0.75rem;">
+                            <i class="ri-search-line"></i> Cari
+                        </button>
+                        @if(request('q') || request('tipe') || (request()->has('mk') && request('mk') != $ujian->mata_kuliah_id))
+                            <a href="{{ route('admin.ujian.soal', $ujian) }}" class="btn btn-sm btn-ghost" title="Reset ke Mata Kuliah Ujian Ini">
+                                <i class="ri-refresh-line"></i>
+                            </a>
+                        @endif
                     </div>
                 </form>
 
-                <form action="{{ route('admin.ujian.soal.attach', $ujian) }}" method="POST">
+                <form action="{{ route('admin.ujian.soal.attach', $ujian) }}" method="POST" id="formAttachSoal">
                     @csrf
 
                     <div style="max-height: 520px; overflow-y: auto; padding-right: 0.35rem;">
                         @forelse($bank as $b)
-                            <div style="padding: 0.75rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 0.6rem; background: #fff;">
-                                <label class="check" style="align-items: flex-start; width: 100%;">
-                                    <input type="checkbox" name="ids[]" value="{{ $b->id }}" style="margin-top: 3px;">
+                            <div style="padding: 0.75rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 0.6rem; background: #fff; transition: background 0.15s ease;">
+                                <label class="check" style="align-items: flex-start; width: 100%; cursor: pointer;">
+                                    <input type="checkbox" name="ids[]" value="{{ $b->id }}" class="bank-check-item" style="margin-top: 3px;" onchange="updateAttachCount()">
                                     <div style="flex: 1; min-width: 0;">
-                                        <div style="font-size: 0.84rem; color: #1e293b; margin-bottom: 0.25rem;">
-                                            {{ Str::limit($b->pertanyaan, 110) }}
+                                        <div style="font-size: 0.84rem; color: #1e293b; margin-bottom: 0.35rem; line-height: 1.45;">
+                                            {{ Str::limit($b->pertanyaan, 120) }}
                                         </div>
-                                        <div style="display: flex; gap: 0.4rem; align-items: center;">
+                                        <div style="display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
+                                            <span class="badge" style="background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; font-size: 0.68rem; font-weight: 600;">
+                                                <i class="ri-book-mark-line"></i> {{ $b->mataKuliah->nama ?? '-' }}
+                                            </span>
                                             <span class="badge {{ $b->isPg() ? 'badge-blue' : 'badge-amber' }}" style="font-size: 0.68rem;">
                                                 {{ $b->tipe_label }}
                                             </span>
@@ -157,16 +222,22 @@
                                 </label>
                             </div>
                         @empty
-                            <div class="empty" style="padding: 2rem 1rem; text-align: center;">
-                                <p style="color: #64748b; margin: 0;">Tidak ada soal yang belum terpasang di bank soal.</p>
+                            <div class="empty" style="padding: 2.5rem 1rem; text-align: center;">
+                                <i class="ri-inbox-archive-line" style="font-size: 2.5rem; color: #cbd5e1; display: block; margin-bottom: 0.5rem;"></i>
+                                <p style="color: #64748b; margin: 0; font-weight: 500;">
+                                    Tidak ada soal yang belum terpasang untuk mata kuliah ini di bank soal.
+                                </p>
+                                <p class="text-xs text-muted" style="margin-top: 0.25rem;">
+                                    Ganti filter mata kuliah di atas jika ingin mengambil bank soal dari mata kuliah lain.
+                                </p>
                             </div>
                         @endforelse
                     </div>
 
                     @if($bank->count() > 0)
                         <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #e2e8f0;">
-                            <button type="submit" class="btn btn-primary btn-block">
-                                <i class="ri-add-line"></i> Pasang Soal yang Dicentang
+                            <button type="submit" class="btn btn-primary btn-block" id="btnSubmitAttach" disabled>
+                                <i class="ri-add-line"></i> Pasang Soal yang Dicentang (<span id="countSelectedBank">0</span>)
                             </button>
                         </div>
                     @endif
@@ -185,8 +256,23 @@
             @csrf
             <div class="modal-body">
                 <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem;">
-                    Sistem akan mengambil sejumlah soal secara acak dari Bank Soal mata kuliah <strong>{{ $ujian->mataKuliah->nama }}</strong> yang belum terpasang pada ujian ini.
+                    Sistem akan mengambil sejumlah soal secara acak dari Bank Soal mata kuliah yang dipilih dan memasangkannya ke ujian ini.
                 </p>
+
+                <!-- Pilihan Sumber Bank Soal Mata Kuliah -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Sumber Bank Soal Mata Kuliah <span class="req">*</span>
+                    </label>
+                    <select name="mata_kuliah_id" class="form-select" required>
+                        @foreach($mkList as $mk)
+                            <option value="{{ $mk->id }}" {{ (string)$selectedMk === (string)$mk->id ? 'selected' : ($mk->id === $ujian->mata_kuliah_id ? 'selected' : '') }}>
+                                {{ $mk->nama }} ({{ $mk->kode }}) &mdash; {{ $mk->soal_count }} Soal di Bank
+                                @if($mk->id === $ujian->mata_kuliah_id) [Mata Kuliah Ujian Ini] @endif
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
                 <div class="form-group">
                     <label class="form-label">
@@ -307,5 +393,33 @@
             document.getElementById('pgContainer').style.display = (tipe === 'pg') ? 'block' : 'none';
             document.getElementById('essayContainer').style.display = (tipe === 'essay') ? 'block' : 'none';
         }
+
+        let isAllBankSelected = false;
+        function toggleSelectAllBank() {
+            const checkboxes = document.querySelectorAll('.bank-check-item');
+            isAllBankSelected = !isAllBankSelected;
+            checkboxes.forEach(cb => {
+                cb.checked = isAllBankSelected;
+            });
+            const label = document.getElementById('labelToggleSelectAll');
+            if (label) {
+                label.textContent = isAllBankSelected ? 'Batal Centang' : 'Centang Semua';
+            }
+            updateAttachCount();
+        }
+
+        function updateAttachCount() {
+            const checkboxes = document.querySelectorAll('.bank-check-item:checked');
+            const count = checkboxes.length;
+            const counter = document.getElementById('countSelectedBank');
+            const submitBtn = document.getElementById('btnSubmitAttach');
+            if (counter) counter.textContent = count;
+            if (submitBtn) {
+                submitBtn.disabled = (count === 0);
+            }
+        }
+
+        // Jalankan saat pertama kali dibuka untuk sync tombol submit
+        document.addEventListener('DOMContentLoaded', updateAttachCount);
     </script>
 @endsection
