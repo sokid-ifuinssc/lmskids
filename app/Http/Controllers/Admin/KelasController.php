@@ -49,4 +49,25 @@ class KelasController extends Controller
 
         return back()->with('success', 'Kelas dihapus.');
     }
+
+    public function bulkDestroy(Request $request)
+    {
+        if ($request->boolean('all')) {
+            $count = Kelas::count();
+            \App\Models\User::whereNotNull('kelas_id')->update(['kelas_id' => null]);
+            Kelas::query()->delete();
+
+            return back()->with('success', "Semua ($count) kelas berhasil dihapus.");
+        }
+
+        $ids = (array) $request->input('ids', []);
+        if (empty($ids)) {
+            return back()->with('error', 'Tidak ada kelas yang dipilih.');
+        }
+
+        \App\Models\User::whereIn('kelas_id', $ids)->update(['kelas_id' => null]);
+        $n = Kelas::whereIn('id', $ids)->delete();
+
+        return back()->with('success', "$n kelas berhasil dihapus.");
+    }
 }

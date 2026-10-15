@@ -68,10 +68,30 @@ class SoalController extends Controller
 
     public function bulkDestroy(Request $request)
     {
+        if ($request->boolean('all')) {
+            $query = Soal::query();
+            if ($request->filled('mk')) {
+                $query->where('mata_kuliah_id', $request->mk);
+            }
+            if ($request->filled('tipe')) {
+                $query->where('tipe', $request->tipe);
+            }
+            if ($request->filled('q')) {
+                $query->where('pertanyaan', 'like', '%' . $request->q . '%');
+            }
+            $n = $query->delete();
+
+            return back()->with('success', "$n soal berhasil dihapus.");
+        }
+
         $ids = (array) $request->input('ids', []);
+        if (empty($ids)) {
+            return back()->with('error', 'Tidak ada soal yang dipilih.');
+        }
+
         $n = Soal::whereIn('id', $ids)->delete();
 
-        return back()->with('success', "$n soal dihapus.");
+        return back()->with('success', "$n soal berhasil dihapus.");
     }
 
     public static function rules(): array

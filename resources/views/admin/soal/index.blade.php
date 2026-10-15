@@ -63,16 +63,25 @@
                 <span>Daftar Soal di Bank (Total: {{ $soal->total() }})</span>
             </h2>
 
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
                 <button type="button" id="btnHapusTerpilih" class="btn btn-danger btn-sm" style="display: none;" onclick="submitBulkDelete()">
                     <i class="ri-delete-bin-line"></i> Hapus yang Dicentang
                 </button>
+                @if($soal->total() > 0)
+                    <button type="button" class="btn btn-outline btn-sm" style="color: #ef4444; border-color: #fca5a5;" onclick="confirmDeleteAllSoal()">
+                        <i class="ri-delete-bin-7-line"></i> Hapus Semua Soal{{ request('mk') || request('tipe') || request('q') ? ' (Sesuai Filter)' : '' }}
+                    </button>
+                @endif
             </div>
         </div>
 
         <form id="formBulkDelete" action="{{ route('admin.soal.bulk-destroy') }}" method="POST">
             @csrf
             @method('DELETE')
+            <input type="hidden" name="all" id="soalDeleteAllInput" value="0">
+            <input type="hidden" name="mk" value="{{ request('mk') }}">
+            <input type="hidden" name="tipe" value="{{ request('tipe') }}">
+            <input type="hidden" name="q" value="{{ request('q') }}">
 
             <div class="table-wrap">
                 <table class="table">
@@ -286,7 +295,18 @@
         }
 
         function submitBulkDelete() {
-            if (confirm('Yakin ingin menghapus semua soal yang dicentang?')) {
+            const checked = document.querySelectorAll('.check-item:checked');
+            if (checked.length === 0) return;
+            if (confirm(`Yakin ingin menghapus ${checked.length} soal yang dicentang?`)) {
+                document.getElementById('soalDeleteAllInput').value = '0';
+                document.getElementById('formBulkDelete').submit();
+            }
+        }
+
+        function confirmDeleteAllSoal() {
+            const filterInfo = "{{ request('mk') || request('tipe') || request('q') ? 'sesuai filter saat ini' : 'seluruhnya di bank soal' }}";
+            if (confirm(`PERINGATAN: Yakin ingin menghapus SEMUA soal ${filterInfo}?\n\nTindakan ini tidak dapat dibatalkan.`)) {
+                document.getElementById('soalDeleteAllInput').value = '1';
                 document.getElementById('formBulkDelete').submit();
             }
         }

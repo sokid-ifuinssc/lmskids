@@ -51,67 +51,99 @@
             </div>
         </div>
 
-        <!-- Table of Users Matching Reference Screenshot media_1791971082538.png -->
-        <div class="table-wrap">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th style="width: 170px;">NIM/NIP</th>
-                        <th>NAMA LENGKAP</th>
-                        <th style="width: 140px;">ROLE</th>
-                        <th style="width: 170px;">KELAS/SEMESTER</th>
-                        <th style="width: 100px; text-align: right;">AKSI</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($mahasiswa as $m)
+        @if($mahasiswa->total() > 0)
+            <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 0.6rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span style="font-size: 0.85rem; color: #64748b;">
+                        Total: <strong>{{ $mahasiswa->total() }}</strong> Mahasiswa Terdaftar
+                    </span>
+                    <button type="button" id="btnHapusMhsTerpilih" class="btn btn-danger btn-sm" style="display: none;" onclick="confirmBulkDeleteMhs()">
+                        <i class="ri-delete-bin-line"></i> Hapus (<span id="mhsSelectedCount">0</span>) Mahasiswa Terpilih
+                    </button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline btn-sm" style="color: #ef4444; border-color: #fca5a5;" onclick="confirmDeleteAllMhs()">
+                        <i class="ri-delete-bin-7-line"></i> Hapus Semua Mahasiswa{{ request('kelas') || request('q') ? ' (Sesuai Filter)' : '' }}
+                    </button>
+                </div>
+            </div>
+        @endif
+
+        <form id="formBulkDeleteMhs" action="{{ route('admin.mahasiswa.bulk-destroy') }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <input type="hidden" name="all" id="mhsDeleteAllInput" value="0">
+            <input type="hidden" name="kelas" value="{{ request('kelas') }}">
+            <input type="hidden" name="q" value="{{ request('q') }}">
+
+            <!-- Table of Users Matching Reference Screenshot media_1791971082538.png -->
+            <div class="table-wrap">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>
-                                <strong class="mono" style="color: #1d4ed8; font-size: 0.9rem;">
-                                    {{ $m->username }}
-                                </strong>
-                            </td>
-                            <td>
-                                <div style="font-weight: 600; color: #1e293b;">{{ $m->name }}</div>
-                            </td>
-                            <td>
-                                <span class="badge badge-blue" style="font-size: 0.74rem; text-transform: lowercase;">
-                                    {{ $m->role }}
-                                </span>
-                            </td>
-                            <td>
-                                @if($m->kelas)
-                                    <span style="font-weight: 600; color: #334155;">{{ $m->kelas->nama }}</span>
-                                @else
-                                    <span class="text-xs text-muted">-</span>
-                                @endif
-                            </td>
-                            <td style="text-align: right;">
-                                <div class="actions">
-                                    <a href="{{ route('admin.mahasiswa.edit', $m) }}" class="btn-icon" title="Edit Mahasiswa">
-                                        <i class="ri-edit-line" style="color: #ea580c;"></i>
-                                    </a>
-                                    <form action="{{ route('admin.mahasiswa.destroy', $m) }}" method="POST" onsubmit="return confirm('Hapus mahasiswa {{ $m->name }} ({{ $m->username }})?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn-icon danger" title="Hapus Mahasiswa">
-                                            <i class="ri-delete-bin-line"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
+                            <th style="width: 40px; text-align: center;">
+                                <input type="checkbox" id="checkAllMhs" onclick="toggleSelectAllMhs(this)" title="Pilih Semua di Halaman Ini">
+                            </th>
+                            <th style="width: 170px;">NIM/NIP</th>
+                            <th>NAMA LENGKAP</th>
+                            <th style="width: 140px;">ROLE</th>
+                            <th style="width: 170px;">KELAS/SEMESTER</th>
+                            <th style="width: 100px; text-align: right;">AKSI</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="empty">
-                                <i class="ri-team-line" style="font-size: 2.5rem; color: #cbd5e1; display: block; margin-bottom: 0.5rem;"></i>
-                                Tidak ada data pengguna ditemukan. Silakan tambahkan manual atau import Excel.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        @forelse($mahasiswa as $m)
+                            <tr>
+                                <td style="text-align: center;">
+                                    <input type="checkbox" name="ids[]" value="{{ $m->id }}" class="check-item-mhs" onchange="updateMhsSelection()">
+                                </td>
+                                <td>
+                                    <strong class="mono" style="color: #1d4ed8; font-size: 0.9rem;">
+                                        {{ $m->username }}
+                                    </strong>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 600; color: #1e293b;">{{ $m->name }}</div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-blue" style="font-size: 0.74rem; text-transform: lowercase;">
+                                        {{ $m->role }}
+                                    </span>
+                                </td>
+                                <td>
+                                    @if($m->kelas)
+                                        <span style="font-weight: 600; color: #334155;">{{ $m->kelas->nama }}</span>
+                                    @else
+                                        <span class="text-xs text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td style="text-align: right;">
+                                    <div class="actions">
+                                        <a href="{{ route('admin.mahasiswa.edit', $m) }}" class="btn-icon" title="Edit Mahasiswa">
+                                            <i class="ri-edit-line" style="color: #ea580c;"></i>
+                                        </a>
+                                        <form action="{{ route('admin.mahasiswa.destroy', $m) }}" method="POST" onsubmit="return confirm('Hapus mahasiswa {{ $m->name }} ({{ $m->username }})?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn-icon danger" title="Hapus Mahasiswa">
+                                                <i class="ri-delete-bin-line"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="empty">
+                                    <i class="ri-team-line" style="font-size: 2.5rem; color: #cbd5e1; display: block; margin-bottom: 0.5rem;"></i>
+                                    Tidak ada data pengguna ditemukan. Silakan tambahkan manual atau import Excel.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </form>
 
         @if($mahasiswa->hasPages())
             <div class="pager">
@@ -223,6 +255,47 @@
         function displayFilename(input, targetId) {
             if (input.files && input.files[0]) {
                 document.getElementById(targetId).textContent = '📄 ' + input.files[0].name;
+            }
+        }
+
+        function toggleSelectAllMhs(master) {
+            const items = document.querySelectorAll('.check-item-mhs');
+            items.forEach(cb => cb.checked = master.checked);
+            updateMhsSelection();
+        }
+
+        function updateMhsSelection() {
+            const checked = document.querySelectorAll('.check-item-mhs:checked');
+            const total = document.querySelectorAll('.check-item-mhs');
+            const master = document.getElementById('checkAllMhs');
+            const btn = document.getElementById('btnHapusMhsTerpilih');
+            const countSpan = document.getElementById('mhsSelectedCount');
+
+            if (master && total.length > 0) {
+                master.checked = checked.length === total.length;
+            }
+
+            if (countSpan) countSpan.textContent = checked.length;
+
+            if (btn) {
+                btn.style.display = checked.length > 0 ? 'inline-flex' : 'none';
+            }
+        }
+
+        function confirmBulkDeleteMhs() {
+            const checked = document.querySelectorAll('.check-item-mhs:checked');
+            if (checked.length === 0) return;
+            if (confirm(`Yakin ingin menghapus ${checked.length} mahasiswa terpilih? Tindakan ini tidak dapat dibatalkan.`)) {
+                document.getElementById('mhsDeleteAllInput').value = '0';
+                document.getElementById('formBulkDeleteMhs').submit();
+            }
+        }
+
+        function confirmDeleteAllMhs() {
+            const filterInfo = "{{ request('kelas') || request('q') ? 'sesuai filter saat ini' : 'seluruhnya di sistem' }}";
+            if (confirm(`PERINGATAN: Yakin ingin menghapus SEMUA data mahasiswa ${filterInfo}?\n\nCatatan: Akun Admin TIDAK akan dihapus.`)) {
+                document.getElementById('mhsDeleteAllInput').value = '1';
+                document.getElementById('formBulkDeleteMhs').submit();
             }
         }
     </script>

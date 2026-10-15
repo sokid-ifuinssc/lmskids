@@ -30,10 +30,12 @@ Route::middleware('auth')->group(function () {
         Route::get('mahasiswa/template', [Admin\MahasiswaController::class, 'template'])->name('mahasiswa.template');
         Route::get('mahasiswa/export', [Admin\MahasiswaController::class, 'export'])->name('mahasiswa.export');
         Route::post('mahasiswa/import', [Admin\MahasiswaController::class, 'import'])->name('mahasiswa.import');
+        Route::delete('mahasiswa/bulk', [Admin\MahasiswaController::class, 'bulkDestroy'])->name('mahasiswa.bulk-destroy');
         Route::resource('mahasiswa', Admin\MahasiswaController::class)->except(['show', 'create'])
             ->parameters(['mahasiswa' => 'mahasiswa']);
 
         // Kelas
+        Route::delete('kelas/bulk', [Admin\KelasController::class, 'bulkDestroy'])->name('kelas.bulk-destroy');
         Route::resource('kelas', Admin\KelasController::class)->except(['show', 'create', 'edit'])
             ->parameters(['kelas' => 'kelas']);
 

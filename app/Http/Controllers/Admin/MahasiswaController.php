@@ -84,6 +84,32 @@ class MahasiswaController extends Controller
         return back()->with('success', 'Mahasiswa dihapus.');
     }
 
+    public function bulkDestroy(Request $request)
+    {
+        if ($request->boolean('all')) {
+            $query = User::mahasiswa();
+            if ($request->filled('kelas')) {
+                $query->where('kelas_id', $request->kelas);
+            }
+            if ($request->filled('q')) {
+                $s = $request->q;
+                $query->where(fn ($w) => $w->where('username', 'like', "%$s%")->orWhere('name', 'like', "%$s%"));
+            }
+            $n = $query->delete();
+
+            return back()->with('success', "$n mahasiswa berhasil dihapus.");
+        }
+
+        $ids = (array) $request->input('ids', []);
+        if (empty($ids)) {
+            return back()->with('error', 'Tidak ada mahasiswa yang dipilih.');
+        }
+
+        $n = User::mahasiswa()->whereIn('id', $ids)->delete();
+
+        return back()->with('success', "$n mahasiswa berhasil dihapus.");
+    }
+
     public function template(ExcelService $excel)
     {
         return $excel->download('template_mahasiswa.xlsx', ['nim', 'nama', 'password', 'kelas'], [
