@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
         // Mahasiswa
         Route::get('mahasiswa/template', [Admin\MahasiswaController::class, 'template'])->name('mahasiswa.template');
         Route::get('mahasiswa/export', [Admin\MahasiswaController::class, 'export'])->name('mahasiswa.export');
+        Route::get('mahasiswa/import', fn () => redirect()->route('admin.mahasiswa.index'));
         Route::post('mahasiswa/import', [Admin\MahasiswaController::class, 'import'])->name('mahasiswa.import');
         Route::delete('mahasiswa/bulk', [Admin\MahasiswaController::class, 'bulkDestroy'])->name('mahasiswa.bulk-destroy');
         Route::resource('mahasiswa', Admin\MahasiswaController::class)->except(['show', 'create'])
@@ -46,6 +47,7 @@ Route::middleware('auth')->group(function () {
         // Bank soal
         Route::get('soal/template/{tipe}', [Admin\SoalController::class, 'template'])->name('soal.template');
         Route::get('soal/export', [Admin\SoalController::class, 'export'])->name('soal.export');
+        Route::get('soal/import', fn () => redirect()->route('admin.soal.index'));
         Route::post('soal/import', [Admin\SoalController::class, 'import'])->name('soal.import');
         Route::delete('soal/bulk', [Admin\SoalController::class, 'bulkDestroy'])->name('soal.bulk-destroy');
         Route::resource('soal', Admin\SoalController::class)->except(['show']);

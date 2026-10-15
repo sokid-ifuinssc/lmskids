@@ -149,6 +149,10 @@ class MahasiswaController extends Controller
                     continue;
                 }
                 $kelas = Kelas::findOrCreateByName($r['kelas']);
+                if (! $kelas) {
+                    $lewati++;
+                    continue;
+                }
                 $user = User::where('username', $nim)->first();
                 if ($user && $user->isAdmin()) {
                     $lewati++;
