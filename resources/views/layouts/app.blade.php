@@ -48,6 +48,10 @@
                         <i class="ri-file-list-3-line"></i>
                         <span>Kelola Ujian</span>
                     </a>
+                    <a href="{{ route('admin.monitoring.index') }}" class="{{ request()->routeIs('admin.monitoring.*') ? 'active' : '' }}">
+                        <i class="ri-radar-line"></i>
+                        <span>Monitoring Ujian</span>
+                    </a>
                     <a href="{{ route('admin.soal.index') }}" class="{{ request()->routeIs('admin.soal.*') ? 'active' : '' }}">
                         <i class="ri-questionnaire-line"></i>
                         <span>Kelola Soal</span>

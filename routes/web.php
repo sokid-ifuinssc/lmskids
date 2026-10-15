@@ -65,6 +65,9 @@ Route::middleware('auth')->group(function () {
         Route::delete('ujian/{ujian}/peserta/{peserta}', [Admin\UjianController::class, 'resetPeserta'])->name('ujian.peserta.reset');
         Route::resource('ujian', Admin\UjianController::class)->except(['show', 'create']);
 
+        // Monitoring Ujian Realtime
+        Route::get('monitoring', [Admin\MonitoringController::class, 'index'])->name('monitoring.index');
+
         // Rekap / Legger
         Route::get('rekap', [Admin\RekapController::class, 'index'])->name('rekap');
         Route::get('rekap/export', [Admin\RekapController::class, 'export'])->name('rekap.export');
