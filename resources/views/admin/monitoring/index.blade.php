@@ -212,7 +212,7 @@
                     <div>
                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
                             <span style="background: rgba(255,255,255,0.2); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 4px; letter-spacing: 0.05em;">
-                                LMS UJIAN
+                                LMSKIDS
                             </span>
                             <span style="background: {{ $selectedUjian->is_active ? '#22c55e' : '#64748b' }}; color: #ffffff; font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 4px;">
                                 {{ $selectedUjian->is_active ? 'LIVE AKTIF' : 'TIDAK AKTIF' }}
@@ -610,7 +610,7 @@
     function salinPesanWhatsApp() {
         @if($selectedUjian)
             let teks = `📢 *MONITORING PROGRESS UJIAN REALTIME*\n`;
-            teks += `🏛️ *LMS Ujian*\n`;
+            teks += `🏛️ *LMSKids by SOKID*\n`;
             teks += `━━━━━━━━━━━━━━━━━━━━━\n`;
             teks += `📝 *Ujian*: {{ $selectedUjian->judul }} ({{ $selectedUjian->label }})\n`;
             teks += `📚 *Mata Kuliah*: {{ $selectedUjian->mataKuliah->nama }}\n`;

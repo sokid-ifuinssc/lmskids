@@ -93,11 +93,11 @@ small, .text-sm { font-size: .82rem; }
     color: var(--gray-900);
 }
 .sidebar-brand {
-    display: flex; align-items: center; gap: .75rem;
-    height: var(--topbar-h);
-    padding: 0 1.25rem;
+    display: flex; flex-direction: column; align-items: flex-start; gap: .15rem;
+    padding: .9rem 1.25rem .8rem;
     border-bottom: 1px solid var(--gray-200);
 }
+.brand-img { width: 100%; max-width: 200px; height: auto; display: block; }
 .brand-logo {
     width: 38px; height: 38px; border-radius: 10px;
     display: grid; place-items: center;

@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'LMS Ujian') — LMS Ujian</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/logo.svg') }}">
+    <title>@yield('title', 'LMS Kids') — LMS Kids</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,13 +18,8 @@
         <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
-                <div class="brand-logo">
-                    <img src="{{ asset('images/logo.svg') }}" alt="Logo LMS Ujian">
-                </div>
-                <div>
-                    <div class="brand-name">LMS Ujian</div>
-                    <div class="brand-sub">{{ auth()->user()->isAdmin() ? 'Dashboard Dosen' : 'Portal Mahasiswa' }}</div>
-                </div>
+                <img class="brand-img" src="{{ asset('images/logo.png') }}" alt="LMS Kids by SOKID">
+                <div class="brand-sub">{{ auth()->user()->isAdmin() ? 'Dashboard Dosen' : 'Portal Mahasiswa' }}</div>
             </div>
 
             <!-- User Profile Card -->

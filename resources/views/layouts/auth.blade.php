@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Masuk') — LMS Ujian Online</title>
+    <title>@yield('title', 'Masuk') — LMS Kids</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -28,21 +29,12 @@
             margin-bottom: 1.8rem;
             color: var(--gray-900);
         }
-        .auth-brand .logo-circle {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 0.75rem;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(122, 26, 46, 0.18);
-        }
-        .auth-brand .logo-circle img { width: 100%; height: 100%; display: block; }
-        .auth-brand h1 {
-            color: var(--maroon-700);
-            font-size: 1.6rem;
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+        .auth-brand .logo-img {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            display: block;
+            margin: 0 auto 0.5rem;
         }
         .auth-brand p {
             color: var(--gray-500);
@@ -62,10 +54,7 @@
 <body>
     <div class="auth-container">
         <div class="auth-brand">
-            <div class="logo-circle">
-                <img src="{{ asset('images/logo.svg') }}" alt="Logo LMS Ujian">
-            </div>
-            <h1>LMS Ujian Online</h1>
+            <img class="logo-img" src="{{ asset('images/logo.png') }}" alt="LMS Kids by SOKID">
         </div>
 
         <div class="auth-card">
