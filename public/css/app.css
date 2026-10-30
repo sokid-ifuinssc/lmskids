@@ -1,4 +1,4 @@
-/* =========================================================
+﻿/* =========================================================
    LMS Ujian — Design System
    Putih bersih dengan aksen hijau lembut, ramah HP & desktop
    ========================================================= */
@@ -85,8 +85,8 @@ small, .text-sm { font-size: .82rem; }
 .sidebar {
     position: fixed; inset: 0 auto 0 0;
     width: var(--sidebar-w);
-    background: #ffffff;
-    border-right: 1px solid var(--gray-200);
+    background: linear-gradient(180deg, #eef7f1 0%, #e3f1e8 100%);
+    border-right: 1px solid var(--green-200);
     display: flex; flex-direction: column;
     z-index: 50;
     transition: transform .25s ease;
@@ -95,7 +95,7 @@ small, .text-sm { font-size: .82rem; }
 .sidebar-brand {
     display: flex; flex-direction: column; align-items: flex-start; gap: .15rem;
     padding: .9rem 1.25rem .8rem;
-    border-bottom: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--green-200);
 }
 .brand-img { width: 100%; max-width: 200px; height: auto; display: block; }
 .brand-logo {
@@ -110,8 +110,8 @@ small, .text-sm { font-size: .82rem; }
 .sidebar-user {
     margin: 1rem; padding: .85rem;
     border-radius: var(--radius);
-    background: var(--green-50);
-    border: 1px solid var(--green-100);
+    background: #ffffff;
+    border: 1px solid var(--green-200);
     display: flex; gap: .75rem; align-items: center;
 }
 .avatar {
@@ -137,15 +137,15 @@ small, .text-sm { font-size: .82rem; }
     transition: background .15s, color .15s;
 }
 .nav a i { font-size: 1.15rem; width: 22px; text-align: center; color: var(--gray-500); transition: color .15s; }
-.nav a:hover { background: var(--green-50); color: var(--green-800); }
+.nav a:hover { background: rgba(255,255,255,.7); color: var(--green-800); }
 .nav a.active {
-    background: var(--green-100);
+    background: #ffffff;
     color: var(--green-900);
     font-weight: 600;
     box-shadow: inset 3px 0 0 var(--maroon-700);
 }
 .nav a.active i { color: var(--maroon-700); }
-.sidebar-footer { padding: .75rem; border-top: 1px solid var(--gray-200); }
+.sidebar-footer { padding: .75rem; border-top: 1px solid var(--green-200); }
 .sidebar-footer button {
     width: 100%; display: flex; align-items: center; gap: .7rem;
     padding: .65rem .75rem; border: 0; background: none; cursor: pointer;
