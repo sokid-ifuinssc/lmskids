@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Data Pengguna')
 @section('page-title')
@@ -98,7 +98,7 @@
                                     <input type="checkbox" name="ids[]" value="{{ $m->id }}" class="check-item-mhs" onchange="updateMhsSelection()">
                                 </td>
                                 <td>
-                                    <strong class="mono" style="color: #1d4ed8; font-size: 0.9rem;">
+                                    <strong class="mono" style="color: #275e43; font-size: 0.9rem;">
                                         {{ $m->username }}
                                     </strong>
                                 </td>

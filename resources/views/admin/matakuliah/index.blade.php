@@ -1,8 +1,8 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Mata Kuliah')
 @section('page-title')
-    <i class="ri-book-read-fill" style="vertical-align: middle; margin-right: 0.35rem; color: #2563eb;"></i> Kelola Mata Kuliah
+    <i class="ri-book-read-fill" style="vertical-align: middle; margin-right: 0.35rem; color: #2f6f4f;"></i> Kelola Mata Kuliah
 @endsection
 @section('page-subtitle', 'Daftar Mata Kuliah & Kurikulum Ujian')
 
@@ -12,7 +12,7 @@
     <div class="span-2 card card-accent">
         <div class="card-header">
             <h2>
-                <i class="ri-book-2-line" style="color: #2563eb;"></i>
+                <i class="ri-book-2-line" style="color: #2f6f4f;"></i>
                 <span>Daftar Mata Kuliah ({{ $matakuliah->count() }})</span>
             </h2>
         </div>
@@ -34,7 +34,7 @@
                         <tr>
                             <td>{{ $idx + 1 }}</td>
                             <td>
-                                <strong class="mono" style="color: #1e3a8a;">{{ $mk->kode }}</strong>
+                                <strong class="mono" style="color: #7a1a2e;">{{ $mk->kode }}</strong>
                             </td>
                             <td>
                                 <div style="font-weight: 600; color: #1e293b;">{{ $mk->nama }}</div>
@@ -80,7 +80,7 @@
     <div class="card card-accent-blue">
         <div class="card-header">
             <h2>
-                <i class="ri-add-circle-fill" style="color: #2563eb;"></i>
+                <i class="ri-add-circle-fill" style="color: #2f6f4f;"></i>
                 <span>Tambah Mata Kuliah</span>
             </h2>
         </div>

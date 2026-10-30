@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Hasil Ujian: ' . $ujian->judul)
 @section('page-title')
@@ -32,7 +32,7 @@
     <!-- Mini Stats -->
     <div class="grid grid-4" style="margin-bottom: 1.5rem;">
         <div class="stat">
-            <div class="stat-icon" style="background: #eff6ff; color: #2563eb;">
+            <div class="stat-icon" style="background: #e8f3ec; color: #2f6f4f;">
                 <i class="ri-user-star-line"></i>
             </div>
             <div>
@@ -114,7 +114,7 @@
                         @endphp
                         <tr>
                             <td>{{ $idx + 1 }}</td>
-                            <td><strong class="mono" style="color: #1e3a8a;">{{ $m->username }}</strong></td>
+                            <td><strong class="mono" style="color: #7a1a2e;">{{ $m->username }}</strong></td>
                             <td>
                                 <div style="font-weight: 600; color: #1e293b;">{{ $m->name }}</div>
                             </td>

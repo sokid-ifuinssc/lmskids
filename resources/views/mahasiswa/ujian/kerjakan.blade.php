@@ -1,4 +1,4 @@
-@extends('layouts.ujian')
+﻿@extends('layouts.ujian')
 
 @section('title', 'Mengerjakan Ujian: ' . $ujian->judul)
 
@@ -47,7 +47,7 @@
                             <!-- Question Header Meta -->
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #f1f5f9;">
                                 <div style="display: flex; align-items: center; gap: 0.6rem;">
-                                    <span style="font-size: 1.1rem; font-weight: 800; color: #0f2e5a;">
+                                    <span style="font-size: 1.1rem; font-weight: 800; color: #5f1223;">
                                         Soal No. {{ $idx + 1 }}
                                     </span>
                                     <span style="font-size: 0.85rem; color: #94a3b8;">/ {{ $soalList->count() }}</span>
@@ -133,7 +133,7 @@
                 <div class="card card-accent-blue" style="margin-bottom: 0;">
                     <div class="card-header" style="padding: 0.85rem 1rem;">
                         <h3 style="font-size: 0.95rem; margin: 0; display: flex; align-items: center; gap: 0.4rem; color: #1e293b;">
-                            <i class="ri-grid-fill" style="color: #2563eb;"></i>
+                            <i class="ri-grid-fill" style="color: #2f6f4f;"></i>
                             <span>Nomor Soal</span>
                         </h3>
                         <span class="text-xs text-muted" id="answeredCounter">
@@ -165,7 +165,7 @@
                                 <span>Belum Dijawab</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <div style="width: 14px; height: 14px; border-radius: 4px; border: 2px solid #2563eb;"></div>
+                                <div style="width: 14px; height: 14px; border-radius: 4px; border: 2px solid #2f6f4f;"></div>
                                 <span>Soal Aktif Dibuka</span>
                             </div>
                         </div>

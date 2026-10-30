@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Rekap Nilai Saya')
 @section('page-title')
@@ -17,7 +17,7 @@
                 <div>
                     <h2 style="font-size: 1.2rem; margin: 0 0 0.25rem; color: #1e293b;">{{ $user->name }}</h2>
                     <div class="text-xs text-muted">
-                        NIM: <strong class="mono" style="color: #1e3a8a;">{{ $user->username }}</strong> &bull;
+                        NIM: <strong class="mono" style="color: #7a1a2e;">{{ $user->username }}</strong> &bull;
                         Kelas: <strong>{{ $user->kelas?->nama ?? '-' }}</strong>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
     <!-- Rekap Nilai per Mata Kuliah (Legger Mahasiswa) -->
     <div style="margin-bottom: 1rem;">
         <h3 style="font-size: 1.15rem; color: #1e293b; font-weight: 700; margin: 0;">
-            <i class="ri-file-chart-line" style="color: #2563eb;"></i> Nilai per Mata Kuliah (CPMK, UTS, UAS)
+            <i class="ri-file-chart-line" style="color: #2f6f4f;"></i> Nilai per Mata Kuliah (CPMK, UTS, UAS)
         </h3>
     </div>
 

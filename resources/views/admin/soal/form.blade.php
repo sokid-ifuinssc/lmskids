@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @php
     $isEdit = $soal->exists;
@@ -88,7 +88,7 @@
                 <!-- Container Pilihan Ganda -->
                 <div id="pgBox" style="{{ old('tipe', $soal->tipe ?? 'pg') === 'essay' ? 'display: none;' : '' }}">
                     <div style="font-weight: 700; font-size: 0.9rem; color: #1e293b; margin: 1.25rem 0 0.75rem; display: flex; align-items: center; gap: 0.35rem;">
-                        <i class="ri-list-check-2" style="color: #2563eb;"></i> 4 Pilihan Jawaban & Kunci
+                        <i class="ri-list-check-2" style="color: #2f6f4f;"></i> 4 Pilihan Jawaban & Kunci
                     </div>
 
                     <div class="grid grid-2" style="gap: 1rem;">

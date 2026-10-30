@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Ujian Berlangsung') — UIN Siber</title>
+    <title>@yield('title', 'Ujian Berlangsung') — LMS Ujian</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
             -webkit-user-select: none;
         }
         .exam-header {
-            background: #0f2e5a;
+            background: #5f1223;
             color: #fff;
             padding: 0.75rem 1.5rem;
             display: flex;
@@ -102,11 +102,11 @@
             transition: all 0.15s;
         }
         .btn-num:hover {
-            border-color: #3b82f6;
-            color: #1d4ed8;
+            border-color: #3a805d;
+            color: #275e43;
         }
         .btn-num.active {
-            border: 2px solid #2563eb !important;
+            border: 2px solid #2f6f4f !important;
             box-shadow: 0 0 0 3px rgba(37,99,235,0.25);
         }
         .btn-num.answered {
@@ -137,11 +137,11 @@
             margin-top: 3px;
             width: 18px;
             height: 18px;
-            accent-color: #2563eb;
+            accent-color: #2f6f4f;
         }
         .opt-label.selected {
-            border-color: #2563eb;
-            background: #eff6ff;
+            border-color: #2f6f4f;
+            background: #e8f3ec;
             box-shadow: 0 2px 8px rgba(37,99,235,0.12);
         }
         .opt-circle {
@@ -157,7 +157,7 @@
             flex-shrink: 0;
         }
         .opt-label.selected .opt-circle {
-            background: #2563eb;
+            background: #2f6f4f;
             color: #fff;
         }
         @media (max-width: 900px) {

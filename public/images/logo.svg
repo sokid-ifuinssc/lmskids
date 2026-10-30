@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="LMS Ujian">
+  <rect width="64" height="64" rx="16" fill="#ffffff"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="14.5" fill="none" stroke="#7a1a2e" stroke-width="3"/>
+  <path d="M14 20c6-2 13-1 18 3v21c-5-4-12-5-18-3z" fill="#2f6f4f"/>
+  <path d="M50 20c-6-2-13-1-18 3v21c5-4 12-5 18-3z" fill="#7a1a2e"/>
+  <circle cx="32" cy="15" r="4" fill="#2f6f4f"/>
+</svg>

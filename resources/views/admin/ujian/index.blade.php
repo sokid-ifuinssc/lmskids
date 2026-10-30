@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Kelola Ujian')
 @section('page-title')
@@ -186,7 +186,7 @@
 
                 <!-- Tombol Simpan Ujian -->
                 <div style="margin-top: 1.5rem;">
-                    <button type="submit" class="btn btn-primary btn-block btn-lg" style="box-shadow: 0 4px 14px rgba(15, 46, 90, 0.35);">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" style="box-shadow: 0 4px 14px rgba(95, 18, 35, 0.35);">
                         <i class="ri-check-line"></i>
                         <span>Simpan Ujian</span>
                     </button>
@@ -199,7 +199,7 @@
     <div class="card card-accent">
         <div class="card-header">
             <h2 style="font-size: 1.15rem; color: #1e293b; font-weight: 700;">
-                <i class="ri-draft-line" style="color: #2563eb;"></i>
+                <i class="ri-draft-line" style="color: #2f6f4f;"></i>
                 <span>Daftar Ujian Anda</span>
             </h2>
             <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -227,7 +227,7 @@
                     @forelse($ujian as $u)
                         <tr>
                             <td>
-                                <strong class="mono" style="color: #1e3a8a;">{{ $u->kode }}</strong>
+                                <strong class="mono" style="color: #7a1a2e;">{{ $u->kode }}</strong>
                             </td>
                             <td>
                                 <div style="font-weight: 600; color: #1e293b;">{{ $u->judul }}</div>

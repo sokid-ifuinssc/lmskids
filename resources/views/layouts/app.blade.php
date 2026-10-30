@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'LMS Ujian') — UIN Siber</title>
+    <title>@yield('title', 'LMS Ujian') — LMS Ujian</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/logo.svg') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,10 +19,10 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
                 <div class="brand-logo">
-                    <i class="ri-graduation-cap-fill"></i>
+                    <img src="{{ asset('images/logo.svg') }}" alt="Logo LMS Ujian">
                 </div>
                 <div>
-                    <div class="brand-name">UIN Siber</div>
+                    <div class="brand-name">LMS Ujian</div>
                     <div class="brand-sub">{{ auth()->user()->isAdmin() ? 'Dashboard Dosen' : 'Portal Mahasiswa' }}</div>
                 </div>
             </div>

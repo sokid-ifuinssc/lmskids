@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Dashboard Dosen')
 @section('page-title')
@@ -40,7 +40,7 @@
         </div>
 
         <div class="stat">
-            <div class="stat-icon" style="background: #eff6ff; color: #2563eb;">
+            <div class="stat-icon" style="background: #e8f3ec; color: #2f6f4f;">
                 <i class="ri-book-read-line"></i>
             </div>
             <div>
@@ -51,7 +51,7 @@
     </div>
 
     <!-- Quick Actions Banner -->
-    <div class="card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, #0f2e5a, #1a4975); color: #fff; border: 0;">
+    <div class="card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, #5f1223, #8f2238); color: #fff; border: 0;">
         <div class="card-body" style="padding: 1.5rem 1.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
             <div>
                 <h3 style="color: #fff; margin: 0 0 0.35rem; font-size: 1.2rem;">Panel Kelola Ujian & Penilaian</h3>

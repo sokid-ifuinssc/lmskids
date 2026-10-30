@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Laporan Nilai & Legger')
 @section('page-title')
@@ -79,7 +79,7 @@
                         <tr>
                             <td class="l">{{ $idx + 1 }}</td>
                             <td class="l">
-                                <strong class="mono" style="color: #1d4ed8;">{{ $r['user']->username }}</strong>
+                                <strong class="mono" style="color: #275e43;">{{ $r['user']->username }}</strong>
                             </td>
                             <td class="l">
                                 <div style="font-weight: 600; color: #1e293b;">{{ $r['user']->name }}</div>

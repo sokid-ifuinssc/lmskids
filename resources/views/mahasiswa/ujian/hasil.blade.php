@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Hasil Ujian: ' . $ujian->judul)
 @section('page-title')
@@ -25,7 +25,7 @@
 
             <!-- Score Badge Area -->
             @if($ujian->tampilkan_nilai && $attempt->nilai !== null)
-                <div style="background: linear-gradient(135deg, #0f2e5a, #1e3a8a); color: #fff; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.75rem; box-shadow: 0 6px 20px rgba(15, 46, 90, 0.25);">
+                <div style="background: linear-gradient(135deg, #5f1223, #7a1a2e); color: #fff; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.75rem; box-shadow: 0 6px 20px rgba(95, 18, 35, 0.25);">
                     <div style="font-size: 0.82rem; color: #93c5fd; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 0.25rem;">
                         NILAI AKHIR ANDA
                     </div>

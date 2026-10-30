@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Bank Soal')
 @section('page-title')
@@ -80,7 +80,7 @@
     <div class="card card-accent-blue">
         <div class="card-header">
             <h2>
-                <i class="ri-folder-open-line" style="color: #2563eb;"></i>
+                <i class="ri-folder-open-line" style="color: #2f6f4f;"></i>
                 <span>Daftar Soal di Bank (Total: {{ $soal->total() }})</span>
             </h2>
 

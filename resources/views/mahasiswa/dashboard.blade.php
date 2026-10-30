@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Portal Ujian Mahasiswa')
 @section('page-title')
@@ -8,7 +8,7 @@
 
 @section('content')
     <!-- Student Greeting Banner -->
-    <div class="card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, #0f2e5a, #164e63); color: #fff; border: 0;">
+    <div class="card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, #5f1223, #8f2238); color: #fff; border: 0;">
         <div class="card-body" style="padding: 1.5rem 1.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
             <div>
                 <div style="font-size: 0.85rem; color: #6ee7b7; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">
@@ -30,7 +30,7 @@
     <!-- Active Exams Grid -->
     <div style="margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
         <h2 style="font-size: 1.15rem; color: #1e293b; font-weight: 700; margin: 0;">
-            <i class="ri-calendar-event-line" style="color: #2563eb;"></i> Ujian yang Tersedia untuk Kelas Anda
+            <i class="ri-calendar-event-line" style="color: #2f6f4f;"></i> Ujian yang Tersedia untuk Kelas Anda
         </h2>
         <span class="badge badge-blue">{{ $ujian->count() }} Ujian Ditemukan</span>
     </div>

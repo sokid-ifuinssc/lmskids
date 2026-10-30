@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+﻿@extends('layouts.auth')
 
 @section('title', 'Masuk ke Sistem Ujian')
 
@@ -71,7 +71,7 @@
             </label>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block btn-lg" style="box-shadow: 0 4px 14px rgba(15, 46, 90, 0.35);">
+        <button type="submit" class="btn btn-primary btn-block btn-lg" style="box-shadow: 0 4px 14px rgba(95, 18, 35, 0.35);">
             <i class="ri-login-box-line"></i>
             <span>Masuk ke Akun</span>
         </button>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Monitoring Ujian')
 @section('page-title')
@@ -19,7 +19,7 @@
     }
 
     .monitoring-header {
-        background: linear-gradient(135deg, #0f2e5a 0%, #1e3a8a 50%, #2563eb 100%);
+        background: linear-gradient(135deg, #5f1223 0%, #7a1a2e 50%, #2f6f4f 100%);
         color: #ffffff;
         padding: 1.5rem 1.75rem;
         position: relative;
@@ -58,7 +58,7 @@
         font-size: 1.85rem;
         font-weight: 800;
         line-height: 1;
-        color: #0f2e5a;
+        color: #5f1223;
     }
 
     .chart-center-label .desc {
@@ -83,7 +83,7 @@
     }
     .tab-btn:hover { background: #e2e8f0; }
     .tab-btn.active {
-        background: #0f2e5a;
+        background: #5f1223;
         color: #ffffff;
     }
 
@@ -212,7 +212,7 @@
                     <div>
                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
                             <span style="background: rgba(255,255,255,0.2); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 4px; letter-spacing: 0.05em;">
-                                LMS UIN SIBER CIREBON
+                                LMS UJIAN
                             </span>
                             <span style="background: {{ $selectedUjian->is_active ? '#22c55e' : '#64748b' }}; color: #ffffff; font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 4px;">
                                 {{ $selectedUjian->is_active ? 'LIVE AKTIF' : 'TIDAK AKTIF' }}
@@ -335,7 +335,7 @@
                         <div style="margin-top: 1.25rem;">
                             <div style="display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.4rem;">
                                 <span style="color: #475569;">Progress Partisipasi Keseluruhan (Selesai + Sedang)</span>
-                                <span style="color: #0f2e5a; font-weight: 800;">{{ $stats['persen_partisipasi'] }}% ({{ $stats['selesai'] + $stats['sedang'] }} / {{ $stats['total'] }} Mahasiswa)</span>
+                                <span style="color: #5f1223; font-weight: 800;">{{ $stats['persen_partisipasi'] }}% ({{ $stats['selesai'] + $stats['sedang'] }} / {{ $stats['total'] }} Mahasiswa)</span>
                             </div>
                             <div style="height: 12px; background: #e2e8f0; border-radius: 9999px; overflow: hidden; display: flex;">
                                 <div style="width: {{ $stats['persen_selesai'] }}%; background: #10b981;" title="Selesai: {{ $stats['selesai'] }} ({{ $stats['persen_selesai'] }}%)"></div>
@@ -430,7 +430,7 @@
                                 <tr class="row-peserta" data-status="{{ $statusKey }}" data-search="{{ strtolower($m->username . ' ' . $m->name) }}">
                                     <td style="text-align: center;" class="row-number">{{ $idx + 1 }}</td>
                                     <td>
-                                        <strong class="mono" style="color: #1d4ed8; font-size: 0.88rem;">{{ $m->username }}</strong>
+                                        <strong class="mono" style="color: #275e43; font-size: 0.88rem;">{{ $m->username }}</strong>
                                     </td>
                                     <td>
                                         <div style="font-weight: 600; color: #1e293b;">{{ $m->name }}</div>
@@ -610,7 +610,7 @@
     function salinPesanWhatsApp() {
         @if($selectedUjian)
             let teks = `📢 *MONITORING PROGRESS UJIAN REALTIME*\n`;
-            teks += `🏛️ *LMS UIN Siber Cirebon*\n`;
+            teks += `🏛️ *LMS Ujian*\n`;
             teks += `━━━━━━━━━━━━━━━━━━━━━\n`;
             teks += `📝 *Ujian*: {{ $selectedUjian->judul }} ({{ $selectedUjian->label }})\n`;
             teks += `📚 *Mata Kuliah*: {{ $selectedUjian->mataKuliah->nama }}\n`;

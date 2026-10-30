@@ -1,8 +1,8 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Konfirmasi Ujian: ' . $ujian->judul)
 @section('page-title')
-    <i class="ri-file-shield-2-fill" style="vertical-align: middle; margin-right: 0.35rem; color: #2563eb;"></i> Konfirmasi & Tata Tertib Ujian
+    <i class="ri-file-shield-2-fill" style="vertical-align: middle; margin-right: 0.35rem; color: #2f6f4f;"></i> Konfirmasi & Tata Tertib Ujian
 @endsection
 @section('page-subtitle', $ujian->judul . ' (' . $ujian->kode . ')')
 
@@ -30,7 +30,7 @@
             <!-- Informasi Penting Grid -->
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; text-align: center;">
                 <div style="background: #f8fafc; padding: 1rem; border-radius: 12px; border: 1px solid #e2e8f0;">
-                    <div style="font-size: 1.75rem; color: #2563eb; margin-bottom: 0.25rem;">
+                    <div style="font-size: 1.75rem; color: #2f6f4f; margin-bottom: 0.25rem;">
                         <i class="ri-time-line"></i>
                     </div>
                     <div class="text-xs text-muted">Durasi Ujian</div>
@@ -98,7 +98,7 @@
                     <a href="{{ route('mhs.dashboard') }}" class="btn btn-outline btn-lg" style="flex: 1;">
                         Batal
                     </a>
-                    <button type="submit" id="btnStartExam" class="btn btn-primary btn-lg" style="flex: 2; box-shadow: 0 4px 14px rgba(15, 46, 90, 0.35);" disabled>
+                    <button type="submit" id="btnStartExam" class="btn btn-primary btn-lg" style="flex: 2; box-shadow: 0 4px 14px rgba(95, 18, 35, 0.35);" disabled>
                         <i class="ri-pencil-fill"></i> Mulai Mengerjakan Ujian &rarr;
                     </button>
                 </div>

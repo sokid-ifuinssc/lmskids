@@ -16,7 +16,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle at top left, #1e3a8a 0%, #0f2e5a 60%, #0a1f3d 100%);
+            background: linear-gradient(160deg, #ffffff 0%, #f4f9f6 55%, #fbf3f5 100%);
             padding: 1.5rem;
         }
         .auth-container {
@@ -26,29 +26,26 @@
         .auth-brand {
             text-align: center;
             margin-bottom: 1.8rem;
-            color: #fff;
+            color: var(--gray-900);
         }
         .auth-brand .logo-circle {
-            width: 60px;
-            height: 60px;
+            width: 64px;
+            height: 64px;
             margin: 0 auto 0.75rem;
             border-radius: 16px;
-            background: linear-gradient(135deg, #10b981, #047857);
-            display: grid;
-            place-items: center;
-            font-size: 2rem;
-            color: #fff;
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(122, 26, 46, 0.18);
         }
+        .auth-brand .logo-circle img { width: 100%; height: 100%; display: block; }
         .auth-brand h1 {
-            color: #fff;
+            color: var(--maroon-700);
             font-size: 1.6rem;
             margin: 0;
             font-weight: 700;
             letter-spacing: -0.02em;
         }
         .auth-brand p {
-            color: #94a3b8;
+            color: var(--gray-500);
             font-size: 0.88rem;
             margin: 0.25rem 0 0;
         }
@@ -56,8 +53,9 @@
             background: #ffffff;
             border-radius: 20px;
             padding: 2.2rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-            border-top: 4px solid #f59e0b;
+            box-shadow: 0 20px 40px rgba(47, 111, 79, 0.12);
+            border: 1px solid var(--gray-200);
+            border-top: 4px solid var(--maroon-700);
         }
     </style>
 </head>
@@ -65,7 +63,7 @@
     <div class="auth-container">
         <div class="auth-brand">
             <div class="logo-circle">
-                <i class="ri-graduation-cap-fill"></i>
+                <img src="{{ asset('images/logo.svg') }}" alt="Logo LMS Ujian">
             </div>
             <h1>LMS Ujian Online</h1>
         </div>

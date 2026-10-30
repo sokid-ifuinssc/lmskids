@@ -1,8 +1,8 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Kelola Soal: ' . $ujian->judul)
 @section('page-title')
-    <i class="ri-list-check" style="vertical-align: middle; margin-right: 0.35rem; color: #2563eb;"></i> Kelola Soal Ujian
+    <i class="ri-list-check" style="vertical-align: middle; margin-right: 0.35rem; color: #2f6f4f;"></i> Kelola Soal Ujian
 @endsection
 @section('page-subtitle', $ujian->judul . ' (' . $ujian->kode . ')')
 
@@ -23,7 +23,7 @@
                 <div class="text-xs text-muted" style="margin-top: 0.25rem;">
                     Mata Kuliah: <strong>{{ $ujian->mataKuliah->nama }}</strong> &bull;
                     Durasi: <strong>{{ $ujian->durasi }} Menit</strong> &bull;
-                    Total Soal Terpasang: <strong style="color: #2563eb;">{{ $ujian->soal->count() }} Soal</strong>
+                    Total Soal Terpasang: <strong style="color: #2f6f4f;">{{ $ujian->soal->count() }} Soal</strong>
                 </div>
             </div>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
@@ -119,7 +119,7 @@
             <div class="card-header" style="flex-wrap: wrap; gap: 0.5rem; justify-content: space-between; align-items: center;">
                 <div>
                     <h2 style="font-size: 1.05rem; margin: 0; color: #1e293b; display: flex; align-items: center; gap: 0.35rem;">
-                        <i class="ri-archive-line" style="color: #2563eb;"></i>
+                        <i class="ri-archive-line" style="color: #2f6f4f;"></i>
                         <span>Pilih dari Bank Soal ({{ $bank->count() }} Tersedia)</span>
                     </h2>
                     @php
@@ -129,7 +129,7 @@
                         @if($selectedMk === 'all')
                             Menampilkan soal dari: <strong>Semua Mata Kuliah</strong>
                         @else
-                            Menampilkan soal khusus MK: <strong style="color: #2563eb;">{{ $activeMkObj->nama ?? $ujian->mataKuliah->nama }}</strong>
+                            Menampilkan soal khusus MK: <strong style="color: #2f6f4f;">{{ $activeMkObj->nama ?? $ujian->mataKuliah->nama }}</strong>
                         @endif
                     </div>
                 </div>
@@ -147,7 +147,7 @@
                     <!-- Dropdown Filter Pengelompokan MK -->
                     <div class="form-group" style="margin-bottom: 0.6rem;">
                         <label class="form-label" style="font-size: 0.76rem; font-weight: 700; color: #334155; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between;">
-                            <span><i class="ri-filter-3-line" style="color: #2563eb;"></i> Kelompokkan Bank Soal per Mata Kuliah:</span>
+                            <span><i class="ri-filter-3-line" style="color: #2f6f4f;"></i> Kelompokkan Bank Soal per Mata Kuliah:</span>
                             <span class="badge" style="background: #e2e8f0; font-size: 0.68rem; font-weight: 600;">{{ $bank->count() }} siap dipasang</span>
                         </label>
                         <select name="mk" class="form-select" style="min-height: 36px; font-size: 0.85rem; font-weight: 600; background-color: #fff; border-color: #cbd5e1;" onchange="this.form.submit()">
@@ -210,7 +210,7 @@
                                             {{ Str::limit($b->pertanyaan, 120) }}
                                         </div>
                                         <div style="display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
-                                            <span class="badge" style="background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; font-size: 0.68rem; font-weight: 600;">
+                                            <span class="badge" style="background: #e8f3ec; color: #275e43; border: 1px solid #cfe6d8; font-size: 0.68rem; font-weight: 600;">
                                                 <i class="ri-book-mark-line"></i> {{ $b->mataKuliah->nama ?? '-' }}
                                             </span>
                                             <span class="badge {{ $b->isPg() ? 'badge-blue' : 'badge-amber' }}" style="font-size: 0.68rem;">

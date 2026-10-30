@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Profil Saya')
 @section('page-title')
@@ -115,7 +115,7 @@
                 </div>
 
                 <div style="margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary btn-block btn-lg" style="box-shadow: 0 4px 14px rgba(15, 46, 90, 0.3);">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" style="box-shadow: 0 4px 14px rgba(95, 18, 35, 0.3);">
                         <i class="ri-save-line"></i>
                         <span>Simpan Perubahan</span>
                     </button>
